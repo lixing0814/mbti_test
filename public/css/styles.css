@@ -234,75 +234,11 @@ header h1::after {
     font-size: 1.2rem;
 }
 
-/* 性别选择样式 */
-.gender-selection {
-    margin: 2rem 0;
+.test-note {
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    background: rgba(102, 126, 234, 0.08);
     text-align: center;
-}
-
-.gender-selection p {
-    margin-bottom: 1.5rem;
-    font-weight: 500;
-    color: var(--text-primary);
-}
-
-.gender-options {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-}
-
-.gender-option {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    position: relative;
-    padding-left: 2.5rem;
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-    transition: color var(--transition);
-}
-
-.gender-option:hover {
-    color: var(--primary-color);
-}
-
-.gender-option input[type="radio"] {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-}
-
-.gender-option input[type="radio"] + span::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--border-color);
-    border-radius: 50%;
-    background-color: white;
-    transition: var(--transition);
-}
-
-.gender-option input[type="radio"]:checked + span::before {
-    border-color: var(--primary-color);
-    background-color: white;
-}
-
-.gender-option input[type="radio"]:checked + span::after {
-    content: '';
-    position: absolute;
-    left: 6px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: var(--primary-color);
 }
 
 /* 按钮样式 */
@@ -424,6 +360,18 @@ header h1::after {
     transition: var(--bounce);
 }
 
+.btn-primary:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    transform: none;
+    box-shadow: none;
+}
+
+.btn-primary:disabled::before,
+.btn-primary:disabled::after {
+    display: none;
+}
+
 /* 测试部分样式 */
 .progress-container {
     margin-bottom: 2.5rem;
@@ -481,6 +429,10 @@ header h1::after {
 }
 
 .option {
+    width: 100%;
+    color: inherit;
+    font: inherit;
+    text-align: left;
     background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(10px);
     border: 2px solid var(--border-color);

@@ -1,225 +1,113 @@
 // MBTI测试题目和逻辑
 
-// 定义测试题目（20个题目，覆盖4个维度，每个题目4个选项）
+// 12 道二选一题目；每个维度各 3 题，结果不会出现同分。
 const questions = [
     {
         id: 1,
-        text: "当你要外出一整天，你会？",
-        dimension: "JP", // 判断(J) vs 感知(P)
+        text: "忙碌一周后，你更想怎样恢复精力？",
+        dimension: "EI",
         options: [
-            { id: 'J', label: "计划你要做什么和在什么时候做", description: "喜欢有明确安排" },
-            { id: 'J', label: "提前准备好所有需要的物品", description: "避免临时手忙脚乱" },
-            { id: 'P', label: "说去就去，不做太多计划", description: "享受随机性" },
-            { id: 'P', label: "根据当天情况灵活决定", description: "喜欢保持弹性" }
+            { id: "E", label: "约朋友见面或参加活动", description: "在互动中重新充电" },
+            { id: "I", label: "留些时间给自己", description: "在安静中恢复状态" }
         ]
     },
     {
         id: 2,
-        text: "在社交场合中，你通常？",
-        dimension: "EI", // 外向(E) vs 内向(I)
+        text: "接触一个新领域时，你通常先关注？",
+        dimension: "SN",
         options: [
-            { id: 'E', label: "主动与陌生人交谈", description: "享受结识新朋友" },
-            { id: 'E', label: "成为谈话的中心", description: "喜欢被关注" },
-            { id: 'I', label: "与少数人进行深入交谈", description: "重视深度交流" },
-            { id: 'I', label: "观察周围的人和事", description: "喜欢安静地了解" }
+            { id: "S", label: "具体事实和实际例子", description: "先弄清它现在怎样运作" },
+            { id: "N", label: "整体概念和未来可能", description: "先理解它还能发展成什么" }
         ]
     },
     {
         id: 3,
-        text: "当你学习新事物时，你更关注？",
-        dimension: "SN", // 感觉(S) vs 直觉(N)
+        text: "朋友向你倾诉难题时，你更自然的反应是？",
+        dimension: "TF",
         options: [
-            { id: 'S', label: "具体的事实和数据", description: "相信实证" },
-            { id: 'S', label: "实际应用和操作方法", description: "重视实用性" },
-            { id: 'N', label: "理论框架和概念模型", description: "需要整体理解" },
-            { id: 'N', label: "潜在的可能性和联系", description: "喜欢探索未知" }
+            { id: "T", label: "一起分析原因和解决办法", description: "帮对方理清问题" },
+            { id: "F", label: "先理解并回应对方的感受", description: "让对方感到被支持" }
         ]
     },
     {
         id: 4,
-        text: "做决策时，你更依赖？",
-        dimension: "TF", // 思考(T) vs 情感(F)
+        text: "面对一次旅行，你更喜欢？",
+        dimension: "JP",
         options: [
-            { id: 'T', label: "逻辑分析和客观标准", description: "重视公平公正" },
-            { id: 'T', label: "利弊权衡和实际结果", description: "注重实效" },
-            { id: 'F', label: "个人价值观和情感", description: "重视内心感受" },
-            { id: 'F', label: "对他人的影响和感受", description: "关心他人福祉" }
+            { id: "J", label: "提前订好行程和住宿", description: "确定的安排更安心" },
+            { id: "P", label: "只定大方向，边走边决定", description: "保留变化的空间" }
         ]
     },
     {
         id: 5,
-        text: "你认为自己是一个？",
-        dimension: "JP",
+        text: "在不熟悉的聚会里，你通常会？",
+        dimension: "EI",
         options: [
-            { id: 'J', label: "较为有条理的人", description: "喜欢秩序和结构" },
-            { id: 'J', label: "做事有始有终的人", description: "不喜欢半途而废" },
-            { id: 'P', label: "较为随兴所至的人", description: "享受自由" },
-            { id: 'P', label: "灵活应变的人", description: "能适应变化" }
+            { id: "E", label: "主动认识不同的人", description: "聊天会让我更投入" },
+            { id: "I", label: "先观察，再和少数人深入聊", description: "慢慢进入状态更舒服" }
         ]
     },
     {
         id: 6,
-        text: "当你有空闲时间时，你更可能？",
-        dimension: "EI",
+        text: "学习一项新技能时，哪种方式更适合你？",
+        dimension: "SN",
         options: [
-            { id: 'E', label: "参加社交活动", description: "喜欢和朋友在一起" },
-            { id: 'E', label: "外出探索新地方", description: "享受外界刺激" },
-            { id: 'I', label: "阅读或独自思考", description: "从内省中获取能量" },
-            { id: 'I', label: "进行安静的爱好", description: "喜欢平静环境" }
+            { id: "S", label: "跟着步骤练习", description: "从可操作的方法开始" },
+            { id: "N", label: "先理解原理再自由尝试", description: "掌握思路后举一反三" }
         ]
     },
     {
         id: 7,
-        text: "假如你成为一名老师，你更愿意教授？",
-        dimension: "SN",
+        text: "团队意见不一致时，你更看重？",
+        dimension: "TF",
         options: [
-            { id: 'S', label: "以事实为主的课程", description: "重视基础知识" },
-            { id: 'S', label: "注重实践的课程", description: "强调动手能力" },
-            { id: 'N', label: "涉及理论的课程", description: "喜欢抽象思考" },
-            { id: 'N', label: "激发创造力的课程", description: "鼓励创新思维" }
+            { id: "T", label: "方案是否合理有效", description: "用统一标准做判断" },
+            { id: "F", label: "方案能否照顾大家", description: "寻找彼此能接受的选择" }
         ]
     },
     {
         id: 8,
-        text: "在解决问题时，你更倾向于？",
-        dimension: "TF",
+        text: "收到一项有截止日期的任务，你通常会？",
+        dimension: "JP",
         options: [
-            { id: 'T', label: "理性分析问题根源", description: "寻求客观解决方案" },
-            { id: 'T', label: "直接指出问题所在", description: "不回避矛盾" },
-            { id: 'F', label: "考虑他人感受", description: "避免伤害他人" },
-            { id: 'F', label: "寻求大家都能接受的方式", description: "重视和谐" }
+            { id: "J", label: "尽早拆分任务并按计划完成", description: "喜欢稳步推进" },
+            { id: "P", label: "先探索，临近截止时集中完成", description: "灵感和压力能推动我" }
         ]
     },
     {
         id: 9,
-        text: "你通常？",
+        text: "需要表达想法时，你更习惯？",
         dimension: "EI",
         options: [
-            { id: 'E', label: "与人容易混熟", description: "社交能力强" },
-            { id: 'E', label: "喜欢与人分享经历", description: "外向开朗" },
-            { id: 'I', label: "比较沉静或矜持", description: "慢热型" },
-            { id: 'I', label: "需要时间了解他人", description: "谨慎交友" }
+            { id: "E", label: "边说边整理思路", description: "交流能帮助我想清楚" },
+            { id: "I", label: "想清楚后再开口", description: "先在心里形成完整想法" }
         ]
     },
     {
         id: 10,
-        text: "当你阅读时，你更关注？",
+        text: "听别人讲一件事时，什么更容易吸引你？",
         dimension: "SN",
         options: [
-            { id: 'S', label: "具体的细节和事实", description: "喜欢详实描述" },
-            { id: 'S', label: "实际案例和应用", description: "重视实用性" },
-            { id: 'N', label: "作者的观点和思想", description: "喜欢深度思考" },
-            { id: 'N', label: "隐含的意义和启示", description: "重视启发" }
+            { id: "S", label: "清楚的细节和真实经历", description: "内容具体才容易理解" },
+            { id: "N", label: "背后的含义和新联想", description: "由此想到更多可能" }
         ]
     },
     {
         id: 11,
-        text: "对于工作环境，你更喜欢？",
-        dimension: "JP",
+        text: "做重要决定时，你通常更信任？",
+        dimension: "TF",
         options: [
-            { id: 'J', label: "结构清晰，规则明确", description: "喜欢有序环境" },
-            { id: 'J', label: "任务明确，目标具体", description: "需要清晰方向" },
-            { id: 'P', label: "灵活自由，较少约束", description: "喜欢自主安排" },
-            { id: 'P', label: "动态变化，充满挑战", description: "享受变化" }
+            { id: "T", label: "逻辑一致的利弊分析", description: "客观标准让我更有把握" },
+            { id: "F", label: "自己的价值观和他人感受", description: "内心认同对我更重要" }
         ]
     },
     {
         id: 12,
-        text: "在评价他人时，你更看重？",
-        dimension: "TF",
-        options: [
-            { id: 'T', label: "能力和成就", description: "重视实际表现" },
-            { id: 'T', label: "理性和公正", description: "欣赏客观态度" },
-            { id: 'F', label: "善良和同理心", description: "重视内在品质" },
-            { id: 'F', label: "真诚和可靠性", description: "信任重要" }
-        ]
-    },
-    {
-        id: 13,
-        text: "在团队讨论中，你更倾向于？",
-        dimension: "EI",
-        options: [
-            { id: 'E', label: "积极发言，分享想法", description: "喜欢参与讨论" },
-            { id: 'E', label: "带动讨论氛围", description: "善于活跃气氛" },
-            { id: 'I', label: "认真倾听，深思熟虑", description: "先理解再表达" },
-            { id: 'I', label: "会后单独交流", description: "更喜欢小范围" }
-        ]
-    },
-    {
-        id: 14,
-        text: "当你需要做决定时，你更依赖？",
-        dimension: "SN",
-        options: [
-            { id: 'S', label: "具体的事实和数据", description: "相信眼见为实" },
-            { id: 'S', label: "实际经验", description: "依赖过往方法" },
-            { id: 'N', label: "直觉和灵感", description: "相信第六感" },
-            { id: 'N', label: "长远愿景", description: "关注未来" }
-        ]
-    },
-    {
-        id: 15,
-        text: "面对变化，你的反应通常是？",
+        text: "周末突然空出一天，你更可能？",
         dimension: "JP",
         options: [
-            { id: 'J', label: "尽快制定新计划", description: "需要控制感" },
-            { id: 'J', label: "评估变化的影响", description: "有准备应对" },
-            { id: 'P', label: "接受变化并适应", description: "视变化为机遇" },
-            { id: 'P', label: "灵活调整行动", description: "不抗拒改变" }
-        ]
-    },
-    {
-        id: 16,
-        text: "在团队合作时，你更可能？",
-        dimension: "TF",
-        options: [
-            { id: 'T', label: "提出客观建议", description: "希望团队改进" },
-            { id: 'T', label: "坚持正确观点", description: "重视原则" },
-            { id: 'F', label: "支持和鼓励队友", description: "希望每个人都参与" },
-            { id: 'F', label: "调解冲突，维护和谐", description: "重视凝聚力" }
-        ]
-    },
-    {
-        id: 17,
-        text: "在社交活动后，你通常感觉？",
-        dimension: "EI",
-        options: [
-            { id: 'E', label: "精力充沛，满足", description: "从社交中获取能量" },
-            { id: 'E', label: "期待下一次聚会", description: "享受互动" },
-            { id: 'I', label: "需要时间独处恢复", description: "社交消耗能量" },
-            { id: 'I', label: "感到有些疲惫", description: "更喜欢安静" }
-        ]
-    },
-    {
-        id: 18,
-        text: "在学习新技能时，你更倾向于？",
-        dimension: "SN",
-        options: [
-            { id: 'S', label: "一步一步地练习", description: "重视基础" },
-            { id: 'S', label: "模仿成功的例子", description: "学习验证方法" },
-            { id: 'N', label: "理解背后的原理", description: "需要整体把握" },
-            { id: 'N', label: "尝试创新的应用", description: "探索可能性" }
-        ]
-    },
-    {
-        id: 19,
-        text: "对于未来规划，你更倾向于？",
-        dimension: "JP",
-        options: [
-            { id: 'J', label: "设定长期目标和计划", description: "喜欢明确方向" },
-            { id: 'J', label: "提前准备可能的挑战", description: "未雨绸缪" },
-            { id: 'P', label: "保持开放，灵活应对", description: "不喜欢过度规划" },
-            { id: 'P', label: "随遇而安，享受当下", description: "重视过程" }
-        ]
-    },
-    {
-        id: 20,
-        text: "对于日常任务，你通常？",
-        dimension: "TF",
-        options: [
-            { id: 'T', label: "按照优先级和效率处理", description: "重视结果" },
-            { id: 'T', label: "分析最优解决方案", description: "追求完美" },
-            { id: 'F', label: "考虑任务对他人的影响", description: "关心他人" },
-            { id: 'F', label: "根据个人兴趣灵活安排", description: "重视内心感受" }
+            { id: "J", label: "选一件想做的事并安排好时间", description: "有计划地享受这一天" },
+            { id: "P", label: "当天看心情再决定", description: "让这一天自然展开" }
         ]
     }
 ];
@@ -292,320 +180,182 @@ const mbtiTypes = {
     }
 };
 
-// 全局变量
+// 测试状态
+const STORAGE_KEY = "mbtiTestProgressV2";
+const emptyScores = () => ({ E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 });
 let currentQuestionIndex = 0;
 let answers = {};
-let dimensionsCountAllAll = {
-    E: 0, I: 0,
-    S: 0, N: 0,
-    T: 0, F: 0,
-    J: 0, P: 0
-};
-let userGenderDef = 'female'; // 默认性别为女生
+let dimensionsCountAll = emptyScores();
 
-// 保存进度到localStorage
+const introSection = document.getElementById("intro");
+const testSection = document.getElementById("test");
+const loadingSection = document.getElementById("loading");
+const startTestBtn = document.getElementById("start-test");
+const continueTestBtn = document.getElementById("continue-test");
+const questionText = document.getElementById("question-text");
+const optionsContainer = document.getElementById("options-container");
+const progressFill = document.getElementById("progress");
+const currentQuestionEl = document.getElementById("current-question");
+const totalQuestionsEl = document.getElementById("total-questions");
+const prevQuestionBtn = document.getElementById("prev-question");
+const nextQuestionBtn = document.getElementById("next-question");
+
 function saveProgress() {
-    const progress = {
-        currentQuestionIndex: currentQuestionIndex,
-        answers: answers,
-        dimensionsCountAll: dimensionsCountAllAll
-    };
-    localStorage.setItem('mbtiTestProgress', JSON.stringify(progress));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ currentQuestionIndex, answers }));
 }
 
-// 从localStorage加载进度
-function loadProgress() {
-    const savedProgress = localStorage.getItem('mbtiTestProgress');
-    if (savedProgress) {
-        const progress = JSON.parse(savedProgress);
-        currentQuestionIndex = progress.currentQuestionIndex;
-        answers = progress.answers;
-        dimensionsCountAll = progress.dimensionsCountAll;
-        return true;
-    }
-    return false;
-}
-
-// DOM元素
-const introSection = document.getElementById('intro');
-const testSection = document.getElementById('test');
-const loadingSection = document.getElementById('loading');
-const startTestBtn = document.getElementById('start-test');
-const continueTestBtn = document.getElementById('continue-test');
-const questionText = document.getElementById('question-text');
-const optionsContainer = document.getElementById('options-container');
-const progressFill = document.getElementById('progress');
-const currentQuestionEl = document.getElementById('current-question');
-const totalQuestionsEl = document.getElementById('total-questions');
-const navigationButtons = document.getElementById('navigation-buttons');
-const prevQuestionBtn = document.getElementById('prev-question');
-const nextQuestionBtn = document.getElementById('next-question');
-
-// 初始化
-function init() {
-    // 设置总题目数
-    totalQuestionsEl.textContent = questions.length;
-    
-    // 添加事件监听器
-    startTestBtn.addEventListener('click', startTest);
-    
-    // 检查是否有保存的进度
-    if (loadProgress() && currentQuestionIndex > 0) {
-        // 如果有保存的进度，显示继续测试按钮
-        if (continueTestBtn) {
-            continueTestBtn.classList.remove('hidden');
-            continueTestBtn.addEventListener('click', continueTest);
+function rebuildScores() {
+    dimensionsCountAll = emptyScores();
+    Object.values(answers).forEach(answer => {
+        if (answer && Object.hasOwn(dimensionsCountAll, answer.optionId)) {
+            dimensionsCountAll[answer.optionId] += 1;
         }
-    }
-    
-    // 性别选择事件
-    document.querySelectorAll('input[name="gender"]').forEach(radio => {
-        radio.addEventListener('change', function() {
-            userGenderDef = this.value;
-        });
     });
 }
 
-// 开始测试
+function loadProgress() {
+    try {
+        const progress = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (!progress || typeof progress.answers !== "object") return false;
+
+        answers = progress.answers;
+        currentQuestionIndex = Math.min(Math.max(Number(progress.currentQuestionIndex) || 0, 0), questions.length - 1);
+        rebuildScores();
+        return Object.keys(answers).length > 0;
+    } catch {
+        localStorage.removeItem(STORAGE_KEY);
+        return false;
+    }
+}
+
+function init() {
+    totalQuestionsEl.textContent = questions.length;
+    startTestBtn.addEventListener("click", startTest);
+    continueTestBtn.addEventListener("click", continueTest);
+    prevQuestionBtn.addEventListener("click", prevQuestion);
+    nextQuestionBtn.addEventListener("click", nextQuestion);
+
+    if (loadProgress()) continueTestBtn.classList.remove("hidden");
+}
+
+function openTest() {
+    introSection.classList.remove("active");
+    introSection.classList.add("hidden");
+    testSection.classList.remove("hidden");
+    testSection.classList.add("active");
+    showQuestion();
+}
+
 function startTest() {
-    // 重置进度
     currentQuestionIndex = 0;
     answers = {};
-    dimensionsCountAll = {
-        E: 0, I: 0,
-        S: 0, N: 0,
-        T: 0, F: 0,
-        J: 0, P: 0
-    };
-    
-    // 获取用户选择的性别
-    const selectedGender = document.querySelector('input[name="gender"]:checked').value;
-    userGenderDef = selectedGender;
-    
-    introSection.classList.remove('active');
-    introSection.classList.add('hidden');
-    testSection.classList.remove('hidden');
-    testSection.classList.add('active');
-    
-    // 显示第一个问题
-    showQuestion(questions[currentQuestionIndex]);
-    
+    dimensionsCountAll = emptyScores();
+    localStorage.removeItem(STORAGE_KEY);
+    openTest();
 }
 
-// 继续测试
 function continueTest() {
-    introSection.classList.remove('active');
-    introSection.classList.add('hidden');
-    testSection.classList.remove('hidden');
-    testSection.classList.add('active');
-    
-    // 显示当前问题
-    showQuestion(questions[currentQuestionIndex]);
+    openTest();
 }
 
-// 显示问题
-function showQuestion(question) {
-    // 更新问题文本
+function showQuestion() {
+    const question = questions[currentQuestionIndex];
     questionText.textContent = question.text;
-    
-    // 清空选项容器
-    optionsContainer.innerHTML = '';
-    
-    // 创建选项
-    question.options.forEach(option => {
-        const optionEl = document.createElement('div');
-        optionEl.classList.add('option');
+    optionsContainer.replaceChildren();
+
+    question.options.forEach((option, optionIndex) => {
+        const optionEl = document.createElement("button");
+        optionEl.type = "button";
+        optionEl.className = "option";
         optionEl.dataset.optionId = option.id;
-        optionEl.dataset.dimension = question.dimension;
-        
+        optionEl.setAttribute("aria-pressed", "false");
         optionEl.innerHTML = `
             <div class="option-label">${option.label}</div>
             <div class="option-description">${option.description}</div>
         `;
-        
-        // 添加点击事件
-        optionEl.addEventListener('click', () => selectOption(optionEl));
-        
+        optionEl.addEventListener("click", () => selectOption(option.id, optionIndex));
         optionsContainer.appendChild(optionEl);
     });
-    
-    // 更新进度
+
+    const savedAnswer = answers[question.id];
+    if (savedAnswer) {
+        const selected = optionsContainer.children[savedAnswer.optionIndex];
+        if (selected) {
+            selected.classList.add("selected");
+            selected.setAttribute("aria-pressed", "true");
+        }
+    }
+
+    prevQuestionBtn.classList.toggle("hidden", currentQuestionIndex === 0);
+    nextQuestionBtn.disabled = !savedAnswer;
+    nextQuestionBtn.textContent = currentQuestionIndex === questions.length - 1 ? "查看结果" : "下一题";
     updateProgress();
-    
-    // 显示/隐藏上一题按钮
-    if (prevQuestionBtn) {
-        if (currentQuestionIndex > 0) {
-            prevQuestionBtn.classList.remove('hidden');
-        } else {
-            prevQuestionBtn.classList.add('hidden');
-        }
-        
-        // 移除旧的事件监听器，避免重复添加
-        prevQuestionBtn.removeEventListener('click', prevQuestion);
-        prevQuestionBtn.addEventListener('click', prevQuestion);
-    }
-    
-    // 添加下一题按钮的事件监听
-    if (nextQuestionBtn) {
-        // 移除旧的事件监听器，避免重复添加
-        nextQuestionBtn.removeEventListener('click', nextQuestion);
-        nextQuestionBtn.addEventListener('click', nextQuestion);
-    }
-    
-    // 如果有保存的答案，恢复选中状态
-    const questionId = question.id;
-    if (answers[questionId] && answers[questionId].optionId) {
-        const savedOptionId = answers[questionId].optionId;
-        const savedDimension = answers[questionId].dimension;
-        const savedOptionIndex = answers[questionId].optionIndex;
-        
-        // 首先移除所有选项的选中状态
-        document.querySelectorAll('.option').forEach(option => {
-            option.classList.remove('selected');
-        });
-        
-        // 获取所有选项元素
-        const optionElements = document.querySelectorAll('.option');
-        
-        // 优先使用保存的选项索引来恢复选中状态
-        if (savedOptionIndex !== undefined && savedOptionIndex >= 0 && savedOptionIndex < optionElements.length) {
-            optionElements[savedOptionIndex].classList.add('selected');
-        } else {
-            // 如果没有保存索引或索引无效，则使用optionId和dimension进行匹配
-            let foundMatch = false;
-            document.querySelectorAll('.option').forEach(option => {
-                if (option.dataset.optionId === savedOptionId && 
-                    option.dataset.dimension === savedDimension && 
-                    !foundMatch) {
-                    option.classList.add('selected');
-                    foundMatch = true;
-                }
-            });
-        }
-    } else {
-        // 如果没有保存的答案，确保所有选项都不被选中
-        document.querySelectorAll('.option').forEach(option => {
-            option.classList.remove('selected');
-        });
-    }
 }
 
-// 选择选项
-function selectOption(selectedOption) {
-    // 移除其他选项的选中状态
-    document.querySelectorAll('.option').forEach(option => {
-        option.classList.remove('selected');
-    });
-    
-    // 添加选中状态
-    selectedOption.classList.add('selected');
-    
-    // 保存答案
+function selectOption(optionId, optionIndex) {
     const questionId = questions[currentQuestionIndex].id;
-    const optionId = selectedOption.dataset.optionId;
-    const dimension = selectedOption.dataset.dimension;
-    
-    // 获取选项在当前问题中的索引，用于准确恢复选中状态
-    const optionIndex = Array.from(document.querySelectorAll('.option')).indexOf(selectedOption);
-    
-    // 如果之前已经回答过这个问题，先减去之前的维度计数
-    if (answers[questionId]) {
-        const previousOptionId = answers[questionId].optionId;
-        dimensionsCountAll[previousOptionId]--;
-    }
-    
-    answers[questionId] = {
-        optionId: optionId,
-        dimension: dimension,
-        optionIndex: optionIndex // 保存用户实际选择的选项索引
-    };
-    
-    // 更新维度计数
-    dimensionsCountAll[optionId]++;
-    
-    // 保存进度
+    answers[questionId] = { optionId, optionIndex };
+    rebuildScores();
+
+    Array.from(optionsContainer.children).forEach((option, index) => {
+        const selected = index === optionIndex;
+        option.classList.toggle("selected", selected);
+        option.setAttribute("aria-pressed", String(selected));
+    });
+
+    nextQuestionBtn.disabled = false;
     saveProgress();
 }
 
-// 下一题
 function nextQuestion() {
-    currentQuestionIndex++;
-    
-    if (currentQuestionIndex < questions.length) {
-        // 还有下一题
-        showQuestion(questions[currentQuestionIndex]);
-    } else {
-        // 测试完成，显示结果
-        // 清除保存的进度，因为测试已完成
-        localStorage.removeItem('mbtiTestProgress');
-        showResults();
+    if (!answers[questions[currentQuestionIndex].id]) return;
+
+    if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex += 1;
+        saveProgress();
+        showQuestion();
+        return;
     }
+
+    localStorage.removeItem(STORAGE_KEY);
+    showResults();
 }
 
-// 更新进度条
+function prevQuestion() {
+    if (currentQuestionIndex === 0) return;
+    currentQuestionIndex -= 1;
+    saveProgress();
+    showQuestion();
+}
+
 function updateProgress() {
-    const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
-    progressFill.style.width = `${progress}%`;
+    const answeredCount = Object.keys(answers).length;
+    progressFill.style.width = `${(answeredCount / questions.length) * 100}%`;
     currentQuestionEl.textContent = currentQuestionIndex + 1;
 }
 
-// 显示结果
 function showResults() {
-    // 隐藏测试部分，显示加载部分
-    testSection.classList.remove('active');
-    testSection.classList.add('hidden');
-    loadingSection.classList.remove('hidden');
-    loadingSection.classList.add('active');
-    
-    // 模拟加载延迟
+    testSection.classList.remove("active");
+    testSection.classList.add("hidden");
+    loadingSection.classList.remove("hidden");
+    loadingSection.classList.add("active");
+
     setTimeout(() => {
-        // 计算MBTI类型
-        const mbtiType = calculateMBTIType();
-        
-        // 创建结果部分
-        createResultSection(mbtiType);
-        
-        // 隐藏加载部分，显示结果部分
-        loadingSection.classList.remove('active');
-        loadingSection.classList.add('hidden');
-        document.getElementById('result').classList.remove('hidden');
-        document.getElementById('result').classList.add('active');
-    }, 1500);
+        createResultSection(calculateMBTIType());
+        loadingSection.classList.remove("active");
+        loadingSection.classList.add("hidden");
+        document.getElementById("result").classList.remove("hidden");
+        document.getElementById("result").classList.add("active");
+    }, 700);
 }
 
-// 返回上一题
-function prevQuestion() {
-    if (currentQuestionIndex > 0) {
-        currentQuestionIndex--;
-        showQuestion(questions[currentQuestionIndex]);
-    }
-}
-
-// 计算MBTI类型（考虑性别差异）
 function calculateMBTIType() {
-    let type = '';
-    
-    // 计算每个维度的偏好
-    type += dimensionsCountAll.E > dimensionsCountAll.I ? 'E' : 'I';
-    type += dimensionsCountAll.S > dimensionsCountAll.N ? 'S' : 'N';
-    
-    // 在TF维度上考虑性别差异
-    // 研究表明，女性更偏向情感型(F)，男性更偏向思维型(T)
-    let tScore = dimensionsCountAll.T;
-    let fScore = dimensionsCountAll.F;
-    
-    if (userGenderDef === 'female') {
-        // 对于女生，略微调整TF维度的计算，使其更容易倾向于F
-        fScore += 0.3; // 情感维度加0.3分
-    } else if (userGenderDef === 'male') {  
-        // 对于男生，略微调整TF维度的计算，使其更容易倾向于T
-        tScore += 0.3; // 思维维度加0.3分
-    }
-    
-    type += tScore > fScore ? 'T' : 'F';
-    type += dimensionsCountAll.J > dimensionsCountAll.P ? 'J' : 'P';
-    
-    return type;
+    return [
+        dimensionsCountAll.E > dimensionsCountAll.I ? "E" : "I",
+        dimensionsCountAll.S > dimensionsCountAll.N ? "S" : "N",
+        dimensionsCountAll.T > dimensionsCountAll.F ? "T" : "F",
+        dimensionsCountAll.J > dimensionsCountAll.P ? "J" : "P"
+    ].join("");
 }
 
 // 生成详细的性格分析
@@ -1115,15 +865,10 @@ function restartTest() {
     // 重置变量
     currentQuestionIndex = 0;
     answers = {};
-    dimensionsCountAll = {
-        E: 0, I: 0,
-        S: 0, N: 0,
-        T: 0, F: 0,
-        J: 0, P: 0
-    };
+    dimensionsCountAll = emptyScores();
     
     // 清除保存的进度
-    localStorage.removeItem('mbtiTestProgress');
+    localStorage.removeItem(STORAGE_KEY);
     
     // 移除结果部分
     const resultSection = document.getElementById('result');

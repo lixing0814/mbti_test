@@ -21,27 +21,14 @@
                 <div class="card">
                     <h2>关于MBTI测试</h2>
                     <p>MBTI（迈尔斯-布里格斯类型指标）是一种广泛使用的性格评估工具，帮助你了解自己的性格偏好。</p>
-                    <p>这个测试将帮助你确定自己在四个维度上的偏好：</p>
+                    <p>用 12 道生活化的二选一题目，快速了解自己在四个维度上的偏好：</p>
                     <ul>
                         <li><strong>能量来源：</strong>外向(E) vs 内向(I)</li>
                         <li><strong>信息获取：</strong>感觉(S) vs 直觉(N)</li>
                         <li><strong>决策方式：</strong>思考(T) vs 情感(F)</li>
                         <li><strong>生活方式：</strong>判断(J) vs 感知(P)</li>
                     </ul>
-                    <p>完成测试后，你将获得16种MBTI性格类型中的一种结果。</p>
-                    <div class="gender-selection">
-                        <p>请选择你的性别（此信息将用于更准确的结果分析）：</p>
-                        <div class="gender-options">
-                            <label class="gender-option">
-                                <input type="radio" name="gender" value="male">
-                                <span>男生</span>
-                            </label>
-                            <label class="gender-option">
-                                <input type="radio" name="gender" value="female" checked>
-                                <span>女生</span>
-                            </label>
-                        </div>
-                    </div>
+                    <p class="test-note">凭第一感觉选择即可，约 2 分钟完成。结果不受性别影响，仅用于自我探索。</p>
                     <button id="start-test" class="btn-primary">开始测试</button>
                     <button id="continue-test" class="btn-secondary hidden">继续测试</button>
                 </div>
@@ -61,7 +48,7 @@
                         <!-- 选项将通过JavaScript动态生成 -->
                     </div>
                     <div id="navigation-buttons" class="navigation-buttons">
-                        <button id="next-question" class="btn-primary">下一题</button>
+                        <button id="next-question" class="btn-primary" disabled>下一题</button>
                         <button id="prev-question" class="btn-secondary small hidden">上一题</button>
                     </div>
                 </div>
